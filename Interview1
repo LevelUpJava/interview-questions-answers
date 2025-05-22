@@ -1,237 +1,205 @@
-1. What is JasperReports and how is it used in Java applications?
-Answer: JasperReports is an open-source reporting engine written in Java. It's widely used to generate dynamic content like PDFs, Excel files, or HTML reports directly from Java applications. It relies on JRXML templates (XML-based report designs), which define the layout, fields, parameters, and data sources. These templates are compiled to .jasper files and filled with data at runtime.
+# Backend Developer Interview Questions and Answers
 
-Use cases:
-Generating invoices
-Exporting database query results into PDF
-Creating charts, dashboards, and business reports
-It integrates well with Spring Boot using libraries like jasperreports and spring-boot-starter-data-jpa for pulling data directly from databases.
+## 1. What is JasperReports and how is it used in Java applications?
+JasperReports is an open-source reporting engine written in Java. It's widely used to generate dynamic content like PDFs, Excel files, or HTML reports directly from Java applications. It relies on **JRXML** templates (XML-based report designs), which define the layout, fields, parameters, and data sources. These templates are compiled to `.jasper` files and filled with data at runtime.
 
-2. What is the compatibility matrix between Java versions and Spring Boot versions?
-Answer: Spring Boot versions are tightly coupled with specific Java versions due to dependency and bytecode compatibility. Here's a basic compatibility chart:
+**Use cases:**
+- Generating invoices
+- Exporting database query results into PDF
+- Creating charts, dashboards, and business reports
 
-Spring Boot Version	Supported Java Versions
-2.3 to 2.7	Java 8 to Java 17
-3.x	Java 17 and above only
+It integrates well with **Spring Boot** using libraries like `jasperreports` and `spring-boot-starter-data-jpa`.
 
-Spring Boot 3 and onwards use Jakarta EE 9+, which means all javax.* imports have changed to jakarta.*. Hence, applications using Spring Boot 3+ must migrate their code accordingly.
+---
 
-3. How can a Spring Boot application be deployed on AWS?
-Answer: There are several ways to deploy a Spring Boot app on AWS:
+## 2. What is the compatibility matrix between Java versions and Spring Boot versions?
+Spring Boot versions are tightly coupled with specific Java versions due to dependency and bytecode compatibility. 
 
-Elastic Beanstalk – Simplified deployment. Upload the .jar, and AWS manages the environment, scaling, and load balancing.
-EC2 (Elastic Compute Cloud) – Manually provision a virtual machine, install Java, and run the .jar.
-ECS or EKS – Use Docker to containerize the app and deploy it on a container service like ECS (Fargate or EC2 mode) or EKS (Kubernetes).
-Lambda – Using the AWS Serverless Java container library, small Spring Boot apps can be deployed as Lambda functions.
-Additionally, AWS RDS can be used for managed databases, and S3 for static assets.
+| Spring Boot Version | Supported Java Versions     |
+|---------------------|-----------------------------|
+| 2.3 to 2.7          | Java 8 to Java 17           |
+| 3.x                 | Java 17 and above only      |
 
-4. What is the difference between a Docker image and a Spring Boot JAR file?
-Answer: A Spring Boot JAR is an executable file containing your application, dependencies, and embedded Tomcat server. It requires a JVM to run and is platform-dependent.
+Spring Boot 3 and onwards use **Jakarta EE 9+**, so all `javax.*` imports have changed to `jakarta.*`.
 
-A Docker image is a self-contained package that includes the JAR, JVM, OS layer, and any required dependencies. It ensures platform-independent deployment and consistency across environments (dev, test, prod).
+---
 
-Docker solves environment mismatches and simplifies CI/CD and scaling in cloud environments.
+## 3. How can a Spring Boot application be deployed on AWS?
+Several options exist:
 
-5. Should you run a database inside a Docker container? What are the pros and cons?
-Answer: Yes, for development and testing. No, or with caution in production.
+1. **Elastic Beanstalk** – Upload the `.jar`, AWS handles provisioning and scaling.
+2. **EC2** – Manually install Java and run the `.jar` on a virtual machine.
+3. **ECS or EKS** – Containerize the app and deploy via ECS or Kubernetes.
+4. **Lambda** – Deploy as a function using AWS Serverless Java container.
 
-Pros:
-Easy to spin up and replicate.
-Consistent dev/test environments.
-Containerized DBs are helpful in CI pipelines.
+You can also use RDS for managed databases and S3 for static assets.
 
-Cons:
-Risk of data loss if volumes are not mounted correctly.
-Difficulties with backup/restore and upgrades.
-Lower I/O performance than native DB.
-Doesn't suit clustered or distributed DB architectures.
-For production, managed DB services like AWS RDS are preferred.
+---
 
-6. What are intermediate and terminal operations in Java Streams? Provide examples.
-Answer: Streams support a pipeline of operations:
+## 4. What is the difference between a Docker image and a Spring Boot JAR file?
+- A **Spring Boot JAR** is a standalone Java executable requiring a JVM.
+- A **Docker image** includes the JAR, JVM, OS, and dependencies — it's portable and environment-independent.
 
-Intermediate operations (lazy): map, filter, sorted, distinct
+Docker is better suited for CI/CD and cloud deployments due to its consistency.
 
-Terminal operations (eager): collect, forEach, reduce, count
+---
 
-Example:
+## 5. Should you run a database inside a Docker container? What are the pros and cons?
+**Yes**, for development and testing. **No**, or cautiously in production.
 
-java
-Copy
-Edit
+**Pros:**
+- Easy to set up
+- Consistent across environments
+- Useful in CI pipelines
+
+**Cons:**
+- Risk of data loss
+- Backup/restore challenges
+- Lower performance
+- Not ideal for clustered DBs
+
+---
+
+## 6. What are intermediate and terminal operations in Java Streams?
+**Intermediate operations:** Lazy, return a stream (`map`, `filter`, `sorted`, `distinct`)
+**Terminal operations:** Eager, trigger processing (`collect`, `forEach`, `reduce`, `count`)
+
+```java
 List<String> names = List.of("Tom", "Jerry", "Anna", "Tom");
-
 List<String> result = names.stream()
-    .filter(name -> name.length() > 3) // intermediate
-    .distinct()                        // intermediate
-    .collect(Collectors.toList());     // terminal
-Streams enable functional-style processing of collections.
+    .filter(name -> name.length() > 3)
+    .distinct()
+    .collect(Collectors.toList());
+```
 
-7. What are the different repository interfaces in Spring Data JPA?
-Answer:
-Spring Data JPA provides several repository interfaces:
+---
 
-CrudRepository<T, ID> – Basic CRUD operations.
+## 7. What are the different repository interfaces in Spring Data JPA?
+1. `CrudRepository<T, ID>` – Basic CRUD
+2. `PagingAndSortingRepository<T, ID>` – Adds pagination/sorting
+3. `JpaRepository<T, ID>` – Adds JPA features like `flush`, `deleteInBatch`
 
-PagingAndSortingRepository<T, ID> – Adds pagination and sorting.
+Prefer `JpaRepository` for full capabilities.
 
-JpaRepository<T, ID> – Extends both and includes JPA-specific methods like flush, deleteInBatch.
+---
 
-Use JpaRepository in most cases, as it's the most complete interface.
+## 8. What are ACID properties in databases?
+1. **Atomicity** – All or nothing
+2. **Consistency** – Valid state before/after transaction
+3. **Isolation** – Concurrent transactions don’t interfere
+4. **Durability** – Persisted changes survive crashes
 
-8. What are ACID properties in databases?
-Answer:
-ACID ensures reliable transactions:
+Essential for transactional reliability.
 
-Atomicity: All steps in a transaction succeed or none.
+---
 
-Consistency: Data remains valid (e.g., foreign key constraints).
+## 9. How can you improve the performance of a slow SQL query?
+- Use indexes
+- Avoid `SELECT *`
+- Optimize joins
+- Analyze using `EXPLAIN`
+- Avoid nested subqueries
+- Cache frequent queries
 
-Isolation: Concurrent transactions don’t interfere.
+---
 
-Durability: Committed changes persist, even after crashes.
+## 10. What is a database view? What are its types?
+A **view** is a virtual table from a SQL query.
 
-ACID properties are vital for transactional integrity, especially in financial systems.
+**Types:**
+- **Simple View**: Single table
+- **Complex View**: Joins/aggregations
+- **Materialized View**: Physically stored query results
 
-9. How can you improve the performance of a slow SQL query?
-Answer:
+Useful for abstraction and reusability.
 
-Use Indexes on WHERE or JOIN columns.
+---
 
-**Avoid SELECT ***; fetch only required columns.
+## 11. What is indexing in a database and what are its benefits?
+Indexing creates a sorted data structure (e.g., B-Tree) for quick lookups.
 
-Optimize JOINs (especially nested ones).
+**Benefits:**
+- Faster queries
+- Efficient filtering, sorting
+- Better JOIN performance
 
-Use EXPLAIN or ANALYZE to understand the execution plan.
+---
 
-Avoid N+1 queries by fetching related entities properly.
+## 12. When can indexing hurt performance instead of improving it?
+- Write-heavy operations (INSERT/UPDATE/DELETE)
+- Index on low-cardinality fields
+- Too many indexes increase storage and overhead
 
-Cache frequent queries.
+---
 
-Consider denormalization if too many joins are degrading performance.
-
-10. What is a database view? What are its types?
-Answer:
-A View is a virtual table based on a SQL query.
-
-Types:
-
-Simple View: Based on one table, no functions or groups.
-
-Complex View: Multiple tables, joins, aggregations.
-
-Materialized View: Stores the result physically, can be refreshed manually or periodically.
-
-Views help in data abstraction, security, and reusability of complex logic.
-
-11. What is indexing in a database and what are its benefits?
-Answer:
-Indexing is a technique to optimize data retrieval by maintaining a sorted structure (often B-Tree) on one or more columns.
-
-Benefits:
-
-Speeds up SELECT queries significantly.
-
-Makes searching, filtering, and sorting efficient.
-
-Useful for columns involved in JOINs and WHERE clauses.
-
-12. When can indexing hurt performance instead of improving it?
-Answer:
-
-On write-heavy tables (INSERT/UPDATE/DELETE) due to index maintenance overhead.
-
-Index on low-cardinality columns (like boolean fields) gives little benefit.
-
-Too many indexes slow down updates and can increase storage usage.
-
-13. How to find the frequency of numbers in a list and sort them by count?
-Answer:
-
-java
-Copy
-Edit
+## 13. How to find the frequency of numbers in a list and sort by count?
+```java
 List<Integer> list = List.of(1, 2, 1, 3, 3, 3, 2, 2);
-
 Map<Integer, Long> freq = list.stream()
     .collect(Collectors.groupingBy(n -> n, Collectors.counting()));
 
 freq.entrySet().stream()
     .sorted(Map.Entry.<Integer, Long>comparingByValue().reversed())
     .forEach(e -> System.out.println(e.getKey() + ": " + e.getValue()));
-This uses Streams + Collectors for concise processing.
+```
 
-14. What is the purpose of the @Transactional annotation in Spring?
-Answer:
-@Transactional ensures that a method or block of code runs inside a transaction. If an exception occurs, all operations inside the transaction are rolled back.
+---
 
-It can be applied at method or class level and supports:
+## 14. What is the purpose of the @Transactional annotation in Spring?
+Marks a method or class to be executed within a transaction. Supports rollback on exceptions, propagation control, and isolation levels.
 
-rollbackFor
+Maintains **data integrity** by ensuring consistent execution.
 
-noRollbackFor
+---
 
-propagation
+## 15. What is the difference between @Component, @Service, and @Repository?
+- `@Component`: Generic bean
+- `@Service`: Business logic layer
+- `@Repository`: Data access layer; adds exception translation
 
-isolation
+All are picked up by component scanning.
 
-It simplifies transaction management and maintains data integrity.
+---
 
-15. What is the difference between @Component, @Service, and @Repository in Spring?
-Answer:
+## 16. What is the N+1 problem in JPA and how can it be avoided?
+Occurs when fetching a list of entities also loads each related entity separately.
 
-@Component: Generic stereotype for any Spring-managed bean.
+**Avoid using:**
+- `@EntityGraph`
+- `JOIN FETCH`
+- DTO projections
 
-@Service: Used for business logic components.
+---
 
-@Repository: Used for DAO layer; provides automatic exception translation.
+## 17. How does Spring Boot auto-configure your application?
+Uses `@EnableAutoConfiguration` to scan the classpath and automatically register beans.
 
-All are scanned during component scanning but have semantic differences.
+Example: If H2 and Spring Data JPA are on the classpath, Spring auto-configures a datasource and repository support.
 
-16. What is the N+1 problem in JPA and how can it be avoided?
-Answer:
-The N+1 problem occurs when fetching a list of entities also triggers separate queries for their related entities.
+---
 
-Solution:
+## 18. What is the difference between eager and lazy loading in JPA?
+- **Eager**: Fetch related entities immediately
+- **Lazy**: Load on access
 
-Use @EntityGraph or JOIN FETCH in JPQL.
+Prefer lazy to avoid unnecessary DB hits.
 
-Use DTO projections to fetch only required data.
+---
 
-17. How does Spring Boot automatically configure your application?
-Answer:
-Spring Boot uses AutoConfiguration with @SpringBootApplication (which includes @EnableAutoConfiguration) to scan the classpath and configure beans based on what is available.
-
-Example: If spring-boot-starter-data-jpa is in the classpath and a datasource is defined, Spring Boot auto-configures JPA and Hibernate.
-
-18. What is the difference between eager and lazy loading in JPA?
-Answer:
-
-Eager: Fetches related entities immediately.
-
-Lazy: Loads related data only when accessed.
-
-Use lazy by default to avoid unnecessary DB queries, but fetch eagerly when data is required upfront.
-
-19. How do you implement pagination in Spring Data JPA?
-Answer:
-Use Pageable interface:
-
-java
-Copy
-Edit
+## 19. How do you implement pagination in Spring Data JPA?
+Use `Pageable` interface:
+```java
 Page<Employee> page = repository.findAll(PageRequest.of(0, 10, Sort.by("name")));
-You get total pages, total elements, and current content.
+```
 
-20. How do you secure a Spring Boot application?
-Answer:
+Provides total elements, pages, and content.
 
-Use Spring Security with configurations for role-based access.
+---
 
-Add filters for JWT token verification.
+## 20. How do you secure a Spring Boot application?
+- Use **Spring Security**
+- JWT-based authentication
+- Method-level protection (`@PreAuthorize`)
+- HTTPS enforcement
 
-Protect endpoints using @PreAuthorize, @Secured, etc.
-
-Use HTTPS and encrypt sensitive data.
-
-Spring Security integrates well with OAuth2 and JWT.
+Supports OAuth2, LDAP, and basic auth as well.
