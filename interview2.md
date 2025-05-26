@@ -1,6 +1,11 @@
 # Java and Spring Boot Interview Questions and Answers
 
 ---
+Here are the parts of the tutorial series:
+
+- Part 1: [Watch on YouTube](https://youtu.be/1IKL-hRkuZA)
+- Part 2: [Watch on YouTube](https://youtu.be/YX8z3nZ1suA)
+- Part 3: [Watch on YouTube](https://youtu.be/7W3SUF8YwRQ)
 
 ## 1. Difference between Java 8, 17, and 21
 **Java 8 (2014):**
