@@ -2,6 +2,7 @@
 # Java Interview Questions - Streams, Concurrency, Spring, JPA, Annotations
 
 ---
+📺 [Watch the video on YouTube](https://youtu.be/EDgVmmzILjE)
 
 ### 1. How to get employees from a list of employees who are 30 years old and more using streams
 
