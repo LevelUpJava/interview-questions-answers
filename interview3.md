@@ -2,7 +2,7 @@
 # Java and Microservices Interview Questions and Answers
 
 ---
-📺 [Watch the video on YouTube](https://youtu.be/EDgVmmzILjE)
+📺 [Watch the video on YouTube](https://youtu.be/Xt9Nfb4s8yo)
 
 ### 1. Explain the architecture of microservices and its pros and cons. What are the components in a microservice?
 
