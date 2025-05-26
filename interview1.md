@@ -1,6 +1,6 @@
 # Backend Developer Interview Questions and Answers
 
-📺 <a href="https://youtu.be/m8LuiZZtHm8" target="_blank">Watch the video on YouTube</a>
+📺 <a href="https://youtu.be/m8LuiZZtHm8">Watch the video on YouTube</a>
 
 ## 1. What is JasperReports and how is it used in Java applications?
 JasperReports is an open-source reporting engine written in Java. It's widely used to generate dynamic content like PDFs, Excel files, or HTML reports directly from Java applications. It relies on **JRXML** templates (XML-based report designs), which define the layout, fields, parameters, and data sources. These templates are compiled to `.jasper` files and filled with data at runtime.
