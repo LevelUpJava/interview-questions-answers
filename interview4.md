@@ -2,6 +2,7 @@
 # Java 17 and Design Patterns Interview Questions
 
 ---
+📺 [Watch the video on YouTube](https://youtu.be/i61ybPxqfKw)
 
 ### 1. What features were added in Java 17?
 
